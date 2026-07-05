@@ -85,3 +85,29 @@ export const SKILLS_QUERY = groq`
     }
   }
 `;
+export const PROJECTS_SECTION_QUERY = groq`
+  *[_id == "projectsSection"][0]{
+    eyebrow,
+    heading,
+    description
+  }
+`;
+
+export const FEATURED_PROJECTS_QUERY = groq`
+  *[_type == "project" && featured == true]
+  | order(order asc, _createdAt desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    summary,
+    description,
+    category,
+    status,
+    featured,
+    order,
+    techStack,
+    githubUrl,
+    liveUrl,
+    accentColor
+  }
+`;

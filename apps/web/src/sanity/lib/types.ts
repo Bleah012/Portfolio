@@ -79,3 +79,24 @@ export type Skills = {
     group?: string;
   }[];
 };
+export type ProjectsSection = {
+  eyebrow?: string;
+  heading?: string;
+  description?: string;
+};
+
+export type Project = {
+  _id: string;
+  title?: string;
+  slug?: string;
+  summary?: string;
+  description?: string;
+  category?: string;
+  status?: string;
+  featured?: boolean;
+  order?: number;
+  techStack?: string[];
+  githubUrl?: string;
+  liveUrl?: string;
+  accentColor?: string;
+};

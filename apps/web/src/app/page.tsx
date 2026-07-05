@@ -1,7 +1,9 @@
 import { client } from "@/sanity/lib/client";
 import {
   ABOUT_QUERY,
+  FEATURED_PROJECTS_QUERY,
   HERO_QUERY,
+  PROJECTS_SECTION_QUERY,
   SITE_SETTINGS_QUERY,
   SKILLS_QUERY,
   STATS_QUERY,
@@ -9,19 +11,24 @@ import {
 import type {
   About,
   Hero,
+  Project,
+  ProjectsSection,
   SiteSettings,
   Skills,
   Stats,
 } from "@/sanity/lib/types";
 
 export default async function Home() {
-  const [settings, hero, stats, about, skills] = await Promise.all([
-    client.fetch<SiteSettings>(SITE_SETTINGS_QUERY),
-    client.fetch<Hero>(HERO_QUERY),
-    client.fetch<Stats>(STATS_QUERY),
-    client.fetch<About>(ABOUT_QUERY),
-    client.fetch<Skills>(SKILLS_QUERY),
-  ]);
+  const [settings, hero, stats, about, skills, projectsSection, projects] =
+    await Promise.all([
+      client.fetch<SiteSettings>(SITE_SETTINGS_QUERY),
+      client.fetch<Hero>(HERO_QUERY),
+      client.fetch<Stats>(STATS_QUERY),
+      client.fetch<About>(ABOUT_QUERY),
+      client.fetch<Skills>(SKILLS_QUERY),
+      client.fetch<ProjectsSection>(PROJECTS_SECTION_QUERY),
+      client.fetch<Project[]>(FEATURED_PROJECTS_QUERY),
+    ]);
 
   return (
     <main className="min-h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50 text-slate-950">
@@ -288,6 +295,92 @@ export default async function Home() {
                 </span>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" className="bg-white px-6 py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-14 text-center">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-blue-600">
+              {projectsSection?.eyebrow || "Portfolio"}
+            </p>
+            <h2 className="text-4xl font-bold tracking-tight text-slate-950 md:text-5xl">
+              {projectsSection?.heading || "Featured Projects"}
+            </h2>
+            {projectsSection?.description && (
+              <p className="mx-auto mt-4 max-w-2xl text-lg leading-8 text-slate-500">
+                {projectsSection.description}
+              </p>
+            )}
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-3">
+            {projects?.map((project) => (
+              <article
+                key={project._id}
+                className="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+              >
+                <div
+                  className="h-3"
+                  style={{ backgroundColor: project.accentColor || "#437FC7" }}
+                />
+
+                <div className="p-6">
+                  <div className="mb-5 flex items-center justify-between gap-3">
+                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-slate-500">
+                      {project.category || "Project"}
+                    </span>
+                    <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-600">
+                      {project.status || "completed"}
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-slate-950">
+                    {project.title}
+                  </h3>
+
+                  <p className="mt-3 min-h-24 text-sm leading-6 text-slate-500">
+                    {project.summary}
+                  </p>
+
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {project.techStack?.map((tech) => (
+                      <span
+                        key={tech}
+                        className="rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-600"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="mt-6 flex gap-3">
+                    {project.githubUrl && (
+                      <a
+                        href={project.githubUrl}
+                        className="text-sm font-semibold text-slate-700 hover:text-blue-600"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        GitHub
+                      </a>
+                    )}
+
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        className="text-sm font-semibold text-blue-600"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Live Demo
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
