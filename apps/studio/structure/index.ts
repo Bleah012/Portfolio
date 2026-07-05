@@ -1,4 +1,5 @@
 import {
+  CaseIcon,
   CodeIcon,
   CogIcon,
   DocumentsIcon,
@@ -8,7 +9,17 @@ import {
 } from '@sanity/icons'
 import type {StructureResolver} from 'sanity/structure'
 
-const singletonTypes = ['siteSettings', 'hero', 'stats', 'about', 'skills', 'projectsSection']
+const singletonTypes = [
+  'siteSettings',
+  'hero',
+  'stats',
+  'about',
+  'skills',
+  'projectsSection',
+  'project',
+  'experienceSection',
+  'experience',
+]
 
 export const structure: StructureResolver = (S) =>
   S.list()
@@ -60,6 +71,26 @@ export const structure: StructureResolver = (S) =>
                     .title('Projects Section'),
                 ),
               S.documentTypeListItem('project').title('Projects'),
+            ]),
+        ),
+
+      S.listItem()
+        .title('Experience')
+        .icon(CaseIcon)
+        .child(
+          S.list()
+            .title('Experience')
+            .items([
+              S.listItem()
+                .title('Section Settings')
+                .icon(CaseIcon)
+                .child(
+                  S.document()
+                    .schemaType('experienceSection')
+                    .documentId('experienceSection')
+                    .title('Experience Section'),
+                ),
+              S.documentTypeListItem('experience').title('Experience Entries'),
             ]),
         ),
 

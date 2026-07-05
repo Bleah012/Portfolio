@@ -100,3 +100,21 @@ export type Project = {
   liveUrl?: string;
   accentColor?: string;
 };
+export type ExperienceSection = {
+  eyebrow?: string;
+  heading?: string;
+  description?: string;
+};
+
+export type Experience = {
+  _id: string;
+  title?: string;
+  organization?: string;
+  location?: string;
+  period?: string;
+  type?: string;
+  description?: string;
+  highlights?: string[];
+  tools?: string[];
+  order?: number;
+};

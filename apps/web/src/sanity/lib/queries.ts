@@ -111,3 +111,26 @@ export const FEATURED_PROJECTS_QUERY = groq`
     accentColor
   }
 `;
+export const EXPERIENCE_SECTION_QUERY = groq`
+  *[_id == "experienceSection"][0]{
+    eyebrow,
+    heading,
+    description
+  }
+`;
+
+export const EXPERIENCE_QUERY = groq`
+  *[_type == "experience"]
+  | order(order asc, _createdAt desc) {
+    _id,
+    title,
+    organization,
+    location,
+    period,
+    type,
+    description,
+    highlights,
+    tools,
+    order
+  }
+`;

@@ -1,6 +1,8 @@
 import { client } from "@/sanity/lib/client";
 import {
   ABOUT_QUERY,
+  EXPERIENCE_QUERY,
+  EXPERIENCE_SECTION_QUERY,
   FEATURED_PROJECTS_QUERY,
   HERO_QUERY,
   PROJECTS_SECTION_QUERY,
@@ -10,6 +12,8 @@ import {
 } from "@/sanity/lib/queries";
 import type {
   About,
+  Experience,
+  ExperienceSection,
   Hero,
   Project,
   ProjectsSection,
@@ -19,16 +23,27 @@ import type {
 } from "@/sanity/lib/types";
 
 export default async function Home() {
-  const [settings, hero, stats, about, skills, projectsSection, projects] =
-    await Promise.all([
-      client.fetch<SiteSettings>(SITE_SETTINGS_QUERY),
-      client.fetch<Hero>(HERO_QUERY),
-      client.fetch<Stats>(STATS_QUERY),
-      client.fetch<About>(ABOUT_QUERY),
-      client.fetch<Skills>(SKILLS_QUERY),
-      client.fetch<ProjectsSection>(PROJECTS_SECTION_QUERY),
-      client.fetch<Project[]>(FEATURED_PROJECTS_QUERY),
-    ]);
+  const [
+    settings,
+    hero,
+    stats,
+    about,
+    skills,
+    projectsSection,
+    projects,
+    experienceSection,
+    experience,
+  ] = await Promise.all([
+    client.fetch<SiteSettings>(SITE_SETTINGS_QUERY),
+    client.fetch<Hero>(HERO_QUERY),
+    client.fetch<Stats>(STATS_QUERY),
+    client.fetch<About>(ABOUT_QUERY),
+    client.fetch<Skills>(SKILLS_QUERY),
+    client.fetch<ProjectsSection>(PROJECTS_SECTION_QUERY),
+    client.fetch<Project[]>(FEATURED_PROJECTS_QUERY),
+    client.fetch<ExperienceSection>(EXPERIENCE_SECTION_QUERY),
+    client.fetch<Experience[]>(EXPERIENCE_QUERY),
+  ]);
 
   return (
     <main className="min-h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50 text-slate-950">
@@ -379,6 +394,86 @@ export default async function Home() {
                     )}
                   </div>
                 </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section id="experience" className="bg-slate-50 px-6 py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-14 text-center">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-blue-600">
+              {experienceSection?.eyebrow || "Experience"}
+            </p>
+            <h2 className="text-4xl font-bold tracking-tight text-slate-950 md:text-5xl">
+              {experienceSection?.heading || "Professional Experience"}
+            </h2>
+            {experienceSection?.description && (
+              <p className="mx-auto mt-4 max-w-2xl text-lg leading-8 text-slate-500">
+                {experienceSection.description}
+              </p>
+            )}
+          </div>
+
+          <div className="mx-auto max-w-4xl space-y-6">
+            {experience?.map((item) => (
+              <article
+                key={item._id}
+                className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+              >
+                <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                  <div>
+                    <p className="text-sm font-bold uppercase tracking-wide text-blue-600">
+                      {item.type}
+                    </p>
+                    <h3 className="mt-2 text-2xl font-bold text-slate-950">
+                      {item.title}
+                    </h3>
+                    <p className="mt-1 font-semibold text-slate-600">
+                      {item.organization}
+                    </p>
+                  </div>
+
+                  <div className="text-left md:text-right">
+                    <p className="font-semibold text-slate-700">
+                      {item.period}
+                    </p>
+                    <p className="text-sm text-slate-400">{item.location}</p>
+                  </div>
+                </div>
+
+                {item.description && (
+                  <p className="mt-5 leading-7 text-slate-600">
+                    {item.description}
+                  </p>
+                )}
+
+                {item.highlights?.length ? (
+                  <ul className="mt-5 space-y-2">
+                    {item.highlights.map((highlight) => (
+                      <li
+                        key={highlight}
+                        className="flex gap-3 text-sm leading-6 text-slate-600"
+                      >
+                        <span className="mt-2 h-1.5 w-1.5 rounded-full bg-blue-500" />
+                        <span>{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+
+                {item.tools?.length ? (
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {item.tools.map((tool) => (
+                      <span
+                        key={tool}
+                        className="rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-600"
+                      >
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                ) : null}
               </article>
             ))}
           </div>
