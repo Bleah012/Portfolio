@@ -13,6 +13,7 @@ import {
   SITE_SETTINGS_QUERY,
   SKILLS_QUERY,
   STATS_QUERY,
+  CONTACT_QUERY,
 } from "@/sanity/lib/queries";
 import type {
   About,
@@ -28,6 +29,7 @@ import type {
   SiteSettings,
   Skills,
   Stats,
+  Contact,
 } from "@/sanity/lib/types";
 
 export default async function Home() {
@@ -45,6 +47,7 @@ export default async function Home() {
     certifications,
     blogSection,
     posts,
+    contact,
   ] = await Promise.all([
     client.fetch<SiteSettings>(SITE_SETTINGS_QUERY),
     client.fetch<Hero>(HERO_QUERY),
@@ -59,6 +62,7 @@ export default async function Home() {
     client.fetch<Certification[]>(CERTIFICATIONS_QUERY),
     client.fetch<BlogSection>(BLOG_SECTION_QUERY),
     client.fetch<Post[]>(POSTS_QUERY),
+    client.fetch<Contact>(CONTACT_QUERY),
   ]);
 
   return (
@@ -635,6 +639,107 @@ export default async function Home() {
               ) : null}
             </article>
           ))}
+        </div>
+      </section>
+      <section id="contact" className="bg-slate-950 px-6 py-24 text-white">
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_0.8fr]">
+          <div>
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-blue-300">
+              {contact?.eyebrow || "Contact"}
+            </p>
+
+            <h2 className="text-4xl font-bold tracking-tight md:text-5xl">
+              {contact?.heading || "Let's Build Something Great"}
+            </h2>
+
+            {contact?.description && (
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+                {contact.description}
+              </p>
+            )}
+
+            {contact?.primaryButton?.label && (
+              <a
+                href={contact.primaryButton.href || `mailto:${contact.email}`}
+                className="mt-8 inline-flex rounded-xl bg-blue-500 px-6 py-3.5 font-semibold text-white shadow-lg shadow-blue-500/25"
+              >
+                {contact.primaryButton.label}
+              </a>
+            )}
+          </div>
+
+          <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+            <div className="space-y-5">
+              {contact?.email && (
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.25em] text-slate-400">
+                    Email
+                  </p>
+                  <a
+                    href={`mailto:${contact.email}`}
+                    className="mt-1 block text-lg font-semibold text-white"
+                  >
+                    {contact.email}
+                  </a>
+                </div>
+              )}
+
+              {contact?.phone && (
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.25em] text-slate-400">
+                    Phone
+                  </p>
+                  <p className="mt-1 text-lg font-semibold text-white">
+                    {contact.phone}
+                  </p>
+                </div>
+              )}
+
+              {contact?.location && (
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.25em] text-slate-400">
+                    Location
+                  </p>
+                  <p className="mt-1 text-lg font-semibold text-white">
+                    {contact.location}
+                  </p>
+                </div>
+              )}
+
+              {contact?.availability && (
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.25em] text-slate-400">
+                    Availability
+                  </p>
+                  <p className="mt-1 text-lg font-semibold text-white">
+                    {contact.availability}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {contact?.socialLinks?.length ? (
+              <div className="mt-8 flex flex-wrap gap-3">
+                {contact.socialLinks.map((link) => (
+                  <a
+                    key={link._key}
+                    href={link.href}
+                    target={
+                      link.href?.startsWith("mailto:") ? undefined : "_blank"
+                    }
+                    rel={
+                      link.href?.startsWith("mailto:")
+                        ? undefined
+                        : "noreferrer"
+                    }
+                    className="rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-slate-200 hover:border-blue-300 hover:text-blue-300"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            ) : null}
+          </div>
         </div>
       </section>
     </main>

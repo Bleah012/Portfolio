@@ -156,3 +156,21 @@ export type Post = {
   externalUrl?: string;
   accentColor?: string;
 };
+export type Contact = {
+  eyebrow?: string;
+  heading?: string;
+  description?: string;
+  email?: string;
+  phone?: string;
+  location?: string;
+  availability?: string;
+  primaryButton?: {
+    label?: string;
+    href?: string;
+  };
+  socialLinks?: {
+    _key: string;
+    label?: string;
+    href?: string;
+  }[];
+};

@@ -181,3 +181,16 @@ export const POSTS_QUERY = groq`
     accentColor
   }
 `;
+export const CONTACT_QUERY = groq`
+  *[_id == "contact"][0] {
+    eyebrow,
+    heading,
+    description,
+    email,
+    phone,
+    location,
+    availability,
+    primaryButton,
+    socialLinks
+  }
+`;

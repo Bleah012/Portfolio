@@ -11,6 +11,7 @@ import {projectsSection} from './projectsSection'
 import {siteSettings} from './siteSettings'
 import {skills} from './skills'
 import {stats} from './stats'
+import {contact} from './contact'
 
 export const schemaTypes = [
   siteSettings,
@@ -26,4 +27,5 @@ export const schemaTypes = [
   certification,
   blogSection,
   post,
+  contact,
 ]

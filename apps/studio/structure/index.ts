@@ -4,6 +4,7 @@ import {
   CogIcon,
   DocumentTextIcon,
   DocumentsIcon,
+  EnvelopeIcon,
   RocketIcon,
   TrendUpwardIcon,
   UserIcon,
@@ -24,6 +25,7 @@ const hiddenDocumentTypes = [
   'certification',
   'blogSection',
   'post',
+  'contact',
 ]
 
 export const structure: StructureResolver = (S) =>
@@ -137,6 +139,10 @@ export const structure: StructureResolver = (S) =>
             ]),
         ),
 
+      S.listItem()
+        .title('Contact')
+        .icon(EnvelopeIcon)
+        .child(S.document().schemaType('contact').documentId('contact').title('Contact')),
       S.divider(),
 
       ...S.documentTypeListItems().filter(
