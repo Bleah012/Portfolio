@@ -1,9 +1,11 @@
 import {about} from './about'
+import {blogSection} from './blogSection'
 import {certification} from './certification'
 import {certificationsSection} from './certificationsSection'
 import {experience} from './experience'
 import {experienceSection} from './experienceSection'
 import {hero} from './hero'
+import {post} from './post'
 import {project} from './project'
 import {projectsSection} from './projectsSection'
 import {siteSettings} from './siteSettings'
@@ -22,4 +24,6 @@ export const schemaTypes = [
   experience,
   certificationsSection,
   certification,
+  blogSection,
+  post,
 ]

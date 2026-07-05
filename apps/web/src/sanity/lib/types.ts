@@ -136,3 +136,23 @@ export type Certification = {
   order?: number;
   accentColor?: string;
 };
+export type BlogSection = {
+  eyebrow?: string;
+  heading?: string;
+  description?: string;
+};
+
+export type Post = {
+  _id: string;
+  title?: string;
+  slug?: string;
+  excerpt?: string;
+  category?: string;
+  readTime?: string;
+  publishedAt?: string;
+  featured?: boolean;
+  order?: number;
+  tags?: string[];
+  externalUrl?: string;
+  accentColor?: string;
+};

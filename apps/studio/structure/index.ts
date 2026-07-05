@@ -1,8 +1,8 @@
 import {
-  DocumentTextIcon,
   CaseIcon,
   CodeIcon,
   CogIcon,
+  DocumentTextIcon,
   DocumentsIcon,
   RocketIcon,
   TrendUpwardIcon,
@@ -22,6 +22,8 @@ const hiddenDocumentTypes = [
   'experience',
   'certificationsSection',
   'certification',
+  'blogSection',
+  'post',
 ]
 
 export const structure: StructureResolver = (S) =>
@@ -55,8 +57,6 @@ export const structure: StructureResolver = (S) =>
         .icon(CodeIcon)
         .child(S.document().schemaType('skills').documentId('skills').title('Skills')),
 
-      S.divider(),
-
       S.listItem()
         .title('Projects')
         .icon(DocumentsIcon)
@@ -66,7 +66,7 @@ export const structure: StructureResolver = (S) =>
             .items([
               S.listItem()
                 .title('Section Settings')
-                .icon(DocumentsIcon)
+                .icon(CogIcon)
                 .child(
                   S.document()
                     .schemaType('projectsSection')
@@ -86,14 +86,14 @@ export const structure: StructureResolver = (S) =>
             .items([
               S.listItem()
                 .title('Section Settings')
-                .icon(CaseIcon)
+                .icon(CogIcon)
                 .child(
                   S.document()
                     .schemaType('experienceSection')
                     .documentId('experienceSection')
                     .title('Experience Section'),
                 ),
-              S.documentTypeListItem('experience').title('Experience Entries'),
+              S.documentTypeListItem('experience').title('Experience Items'),
             ]),
         ),
 
@@ -106,7 +106,7 @@ export const structure: StructureResolver = (S) =>
             .items([
               S.listItem()
                 .title('Section Settings')
-                .icon(DocumentTextIcon)
+                .icon(CogIcon)
                 .child(
                   S.document()
                     .schemaType('certificationsSection')
@@ -114,6 +114,26 @@ export const structure: StructureResolver = (S) =>
                     .title('Certifications Section'),
                 ),
               S.documentTypeListItem('certification').title('Certifications'),
+            ]),
+        ),
+
+      S.listItem()
+        .title('Blog')
+        .icon(DocumentTextIcon)
+        .child(
+          S.list()
+            .title('Blog')
+            .items([
+              S.listItem()
+                .title('Section Settings')
+                .icon(CogIcon)
+                .child(
+                  S.document()
+                    .schemaType('blogSection')
+                    .documentId('blogSection')
+                    .title('Blog Section'),
+                ),
+              S.documentTypeListItem('post').title('Posts'),
             ]),
         ),
 

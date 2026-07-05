@@ -1,12 +1,14 @@
 import { client } from "@/sanity/lib/client";
 import {
   ABOUT_QUERY,
+  BLOG_SECTION_QUERY,
   CERTIFICATIONS_QUERY,
   CERTIFICATIONS_SECTION_QUERY,
   EXPERIENCE_QUERY,
   EXPERIENCE_SECTION_QUERY,
   FEATURED_PROJECTS_QUERY,
   HERO_QUERY,
+  POSTS_QUERY,
   PROJECTS_SECTION_QUERY,
   SITE_SETTINGS_QUERY,
   SKILLS_QUERY,
@@ -14,11 +16,13 @@ import {
 } from "@/sanity/lib/queries";
 import type {
   About,
+  BlogSection,
   Certification,
   CertificationsSection,
   Experience,
   ExperienceSection,
   Hero,
+  Post,
   Project,
   ProjectsSection,
   SiteSettings,
@@ -39,6 +43,8 @@ export default async function Home() {
     experience,
     certificationsSection,
     certifications,
+    blogSection,
+    posts,
   ] = await Promise.all([
     client.fetch<SiteSettings>(SITE_SETTINGS_QUERY),
     client.fetch<Hero>(HERO_QUERY),
@@ -51,6 +57,8 @@ export default async function Home() {
     client.fetch<Experience[]>(EXPERIENCE_QUERY),
     client.fetch<CertificationsSection>(CERTIFICATIONS_SECTION_QUERY),
     client.fetch<Certification[]>(CERTIFICATIONS_QUERY),
+    client.fetch<BlogSection>(BLOG_SECTION_QUERY),
+    client.fetch<Post[]>(POSTS_QUERY),
   ]);
 
   return (
@@ -407,6 +415,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
       <section id="experience" className="bg-slate-50 px-6 py-24">
         <div className="mx-auto max-w-7xl">
           <div className="mb-14 text-center">
@@ -487,6 +496,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
       <section id="certifications" className="bg-white px-6 py-24">
         <div className="mx-auto max-w-7xl">
           <div className="mb-14 text-center">
@@ -510,12 +520,12 @@ export default async function Home() {
                 className="rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm"
               >
                 <div
-                  className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl text-lg font-bold text-white"
+                  className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl text-sm font-bold text-white"
                   style={{
                     backgroundColor: certification.accentColor || "#437FC7",
                   }}
                 >
-                  ✓
+                  OK
                 </div>
 
                 <div className="mb-4 flex flex-wrap gap-2">
@@ -556,6 +566,75 @@ export default async function Home() {
               </article>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section id="blog" className="mx-auto w-full max-w-6xl px-6 py-20">
+        <div className="mb-10 max-w-3xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-blue-600">
+            {blogSection?.eyebrow ?? "Blog"}
+          </p>
+          <h2 className="mt-3 text-3xl font-bold text-slate-950 sm:text-4xl">
+            {blogSection?.heading ?? "Blog & Articles"}
+          </h2>
+          {blogSection?.description ? (
+            <p className="mt-4 text-base leading-7 text-slate-600">
+              {blogSection.description}
+            </p>
+          ) : null}
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-3">
+          {posts?.map((post) => (
+            <article
+              key={post._id}
+              className="flex min-h-[320px] flex-col rounded-lg border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+            >
+              <div
+                className="mb-5 h-1.5 w-16 rounded-full"
+                style={{ backgroundColor: post.accentColor ?? "#437FC7" }}
+              />
+
+              <div className="mb-4 flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                {post.category ? <span>{post.category}</span> : null}
+                {post.readTime ? <span>{post.readTime}</span> : null}
+              </div>
+
+              <h3 className="text-xl font-bold leading-snug text-slate-950">
+                {post.title}
+              </h3>
+
+              {post.excerpt ? (
+                <p className="mt-4 flex-1 text-sm leading-6 text-slate-600">
+                  {post.excerpt}
+                </p>
+              ) : null}
+
+              {post.tags?.length ? (
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {post.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border border-slate-200 px-3 py-1 text-xs font-medium text-slate-600"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
+
+              {post.externalUrl ? (
+                <a
+                  href={post.externalUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-6 inline-flex text-sm font-semibold text-blue-600 hover:text-blue-700"
+                >
+                  Read article
+                </a>
+              ) : null}
+            </article>
+          ))}
         </div>
       </section>
     </main>

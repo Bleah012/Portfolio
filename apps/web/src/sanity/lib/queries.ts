@@ -157,3 +157,27 @@ export const CERTIFICATIONS_QUERY = groq`
     accentColor
   }
 `;
+export const BLOG_SECTION_QUERY = groq`
+  *[_id == "blogSection"][0] {
+    eyebrow,
+    heading,
+    description
+  }
+`;
+
+export const POSTS_QUERY = groq`
+  *[_type == "post" && featured == true] | order(order asc, publishedAt desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    excerpt,
+    category,
+    readTime,
+    publishedAt,
+    featured,
+    order,
+    tags,
+    externalUrl,
+    accentColor
+  }
+`;
