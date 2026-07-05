@@ -32,3 +32,35 @@ export const HERO_QUERY = groq`
     }
   }
 `;
+
+export const STATS_QUERY = groq`
+  *[_id == "stats"][0]{
+    items[]{
+      _key,
+      value,
+      suffix,
+      label,
+      description
+    }
+  }
+`;
+
+export const ABOUT_QUERY = groq`
+  *[_id == "about"][0]{
+    eyebrow,
+    heading,
+    highlight,
+    body,
+    timeline[]{
+      _key,
+      year,
+      title,
+      description
+    },
+    values[]{
+      _key,
+      title,
+      description
+    }
+  }
+`;

@@ -32,3 +32,31 @@ export type Hero = {
     color?: string;
   }[];
 };
+
+export type Stats = {
+  items?: {
+    _key: string;
+    value?: number;
+    suffix?: string;
+    label?: string;
+    description?: string;
+  }[];
+};
+
+export type About = {
+  eyebrow?: string;
+  heading?: string;
+  highlight?: string;
+  body?: string[];
+  timeline?: {
+    _key: string;
+    year?: string;
+    title?: string;
+    description?: string;
+  }[];
+  values?: {
+    _key: string;
+    title?: string;
+    description?: string;
+  }[];
+};

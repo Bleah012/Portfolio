@@ -1,11 +1,18 @@
 import { client } from "@/sanity/lib/client";
-import { HERO_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
-import type { Hero, SiteSettings } from "@/sanity/lib/types";
+import {
+  ABOUT_QUERY,
+  HERO_QUERY,
+  SITE_SETTINGS_QUERY,
+  STATS_QUERY,
+} from "@/sanity/lib/queries";
+import type { About, Hero, SiteSettings, Stats } from "@/sanity/lib/types";
 
 export default async function Home() {
-  const [settings, hero] = await Promise.all([
+  const [settings, hero, stats, about] = await Promise.all([
     client.fetch<SiteSettings>(SITE_SETTINGS_QUERY),
     client.fetch<Hero>(HERO_QUERY),
+    client.fetch<Stats>(STATS_QUERY),
+    client.fetch<About>(ABOUT_QUERY),
   ]);
 
   return (
@@ -124,6 +131,87 @@ export default async function Home() {
                 ,
               </p>
               <p className="text-purple-300">{"}"}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-slate-200 bg-white/80 px-6 py-10 backdrop-blur">
+        <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-4">
+          {stats?.items?.map((item) => (
+            <div
+              key={item._key}
+              className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+            >
+              <p className="text-4xl font-bold text-blue-600">
+                {item.value}
+                {item.suffix}
+              </p>
+              <p className="mt-2 font-semibold text-slate-900">{item.label}</p>
+              <p className="mt-1 text-sm text-slate-500">{item.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section id="about" className="bg-white px-6 py-24">
+        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+          <div>
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-blue-600">
+              {about?.eyebrow || "About Me"}
+            </p>
+
+            <h2 className="text-4xl font-bold tracking-tight text-slate-950 md:text-5xl">
+              {about?.heading?.replace(about?.highlight || "", "")}
+              {about?.highlight && (
+                <span className="bg-gradient-to-r from-blue-600 to-sky-400 bg-clip-text text-transparent">
+                  {about.highlight}
+                </span>
+              )}
+            </h2>
+
+            <div className="mt-8 space-y-5 text-lg leading-8 text-slate-600">
+              {about?.body?.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-8">
+            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+              <h3 className="mb-5 text-xl font-bold">Journey</h3>
+              <div className="space-y-5">
+                {about?.timeline?.map((item) => (
+                  <div
+                    key={item._key}
+                    className="border-l-2 border-blue-200 pl-5"
+                  >
+                    <p className="text-sm font-bold text-blue-600">
+                      {item.year}
+                    </p>
+                    <h4 className="mt-1 font-semibold text-slate-950">
+                      {item.title}
+                    </h4>
+                    <p className="mt-1 text-sm leading-6 text-slate-500">
+                      {item.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-3">
+              {about?.values?.map((item) => (
+                <div
+                  key={item._key}
+                  className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+                >
+                  <h4 className="font-bold text-slate-950">{item.title}</h4>
+                  <p className="mt-2 text-sm leading-6 text-slate-500">
+                    {item.description}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
