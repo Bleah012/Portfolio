@@ -1,7 +1,7 @@
-import {CogIcon} from '@sanity/icons'
+import {CogIcon, RocketIcon} from '@sanity/icons'
 import type {StructureResolver} from 'sanity/structure'
 
-const singletonTypes = ['siteSettings']
+const singletonTypes = ['siteSettings', 'hero']
 
 export const structure: StructureResolver = (S) =>
   S.list()
@@ -13,6 +13,11 @@ export const structure: StructureResolver = (S) =>
         .child(
           S.document().schemaType('siteSettings').documentId('siteSettings').title('Site Settings'),
         ),
+
+      S.listItem()
+        .title('Hero')
+        .icon(RocketIcon)
+        .child(S.document().schemaType('hero').documentId('hero').title('Hero')),
 
       S.divider(),
 
