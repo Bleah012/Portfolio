@@ -1,4 +1,5 @@
 import {
+  DocumentTextIcon,
   CaseIcon,
   CodeIcon,
   CogIcon,
@@ -9,7 +10,7 @@ import {
 } from '@sanity/icons'
 import type {StructureResolver} from 'sanity/structure'
 
-const singletonTypes = [
+const hiddenDocumentTypes = [
   'siteSettings',
   'hero',
   'stats',
@@ -19,6 +20,8 @@ const singletonTypes = [
   'project',
   'experienceSection',
   'experience',
+  'certificationsSection',
+  'certification',
 ]
 
 export const structure: StructureResolver = (S) =>
@@ -94,9 +97,29 @@ export const structure: StructureResolver = (S) =>
             ]),
         ),
 
+      S.listItem()
+        .title('Certifications')
+        .icon(DocumentTextIcon)
+        .child(
+          S.list()
+            .title('Certifications')
+            .items([
+              S.listItem()
+                .title('Section Settings')
+                .icon(DocumentTextIcon)
+                .child(
+                  S.document()
+                    .schemaType('certificationsSection')
+                    .documentId('certificationsSection')
+                    .title('Certifications Section'),
+                ),
+              S.documentTypeListItem('certification').title('Certifications'),
+            ]),
+        ),
+
       S.divider(),
 
       ...S.documentTypeListItems().filter(
-        (listItem) => !singletonTypes.includes(listItem.getId() ?? ''),
+        (listItem) => !hiddenDocumentTypes.includes(listItem.getId() ?? ''),
       ),
     ])

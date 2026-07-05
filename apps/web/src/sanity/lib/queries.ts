@@ -134,3 +134,26 @@ export const EXPERIENCE_QUERY = groq`
     order
   }
 `;
+export const CERTIFICATIONS_SECTION_QUERY = groq`
+  *[_id == "certificationsSection"][0]{
+    eyebrow,
+    heading,
+    description
+  }
+`;
+
+export const CERTIFICATIONS_QUERY = groq`
+  *[_type == "certification" && featured == true]
+  | order(order asc, _createdAt desc) {
+    _id,
+    title,
+    issuer,
+    date,
+    category,
+    description,
+    credentialUrl,
+    featured,
+    order,
+    accentColor
+  }
+`;

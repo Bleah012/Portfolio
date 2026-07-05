@@ -1,6 +1,8 @@
 import { client } from "@/sanity/lib/client";
 import {
   ABOUT_QUERY,
+  CERTIFICATIONS_QUERY,
+  CERTIFICATIONS_SECTION_QUERY,
   EXPERIENCE_QUERY,
   EXPERIENCE_SECTION_QUERY,
   FEATURED_PROJECTS_QUERY,
@@ -12,6 +14,8 @@ import {
 } from "@/sanity/lib/queries";
 import type {
   About,
+  Certification,
+  CertificationsSection,
   Experience,
   ExperienceSection,
   Hero,
@@ -33,6 +37,8 @@ export default async function Home() {
     projects,
     experienceSection,
     experience,
+    certificationsSection,
+    certifications,
   ] = await Promise.all([
     client.fetch<SiteSettings>(SITE_SETTINGS_QUERY),
     client.fetch<Hero>(HERO_QUERY),
@@ -43,6 +49,8 @@ export default async function Home() {
     client.fetch<Project[]>(FEATURED_PROJECTS_QUERY),
     client.fetch<ExperienceSection>(EXPERIENCE_SECTION_QUERY),
     client.fetch<Experience[]>(EXPERIENCE_QUERY),
+    client.fetch<CertificationsSection>(CERTIFICATIONS_SECTION_QUERY),
+    client.fetch<Certification[]>(CERTIFICATIONS_QUERY),
   ]);
 
   return (
@@ -474,6 +482,77 @@ export default async function Home() {
                     ))}
                   </div>
                 ) : null}
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section id="certifications" className="bg-white px-6 py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-14 text-center">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-blue-600">
+              {certificationsSection?.eyebrow || "Credentials"}
+            </p>
+            <h2 className="text-4xl font-bold tracking-tight text-slate-950 md:text-5xl">
+              {certificationsSection?.heading || "Certifications & Awards"}
+            </h2>
+            {certificationsSection?.description && (
+              <p className="mx-auto mt-4 max-w-2xl text-lg leading-8 text-slate-500">
+                {certificationsSection.description}
+              </p>
+            )}
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {certifications?.map((certification) => (
+              <article
+                key={certification._id}
+                className="rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm"
+              >
+                <div
+                  className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl text-lg font-bold text-white"
+                  style={{
+                    backgroundColor: certification.accentColor || "#437FC7",
+                  }}
+                >
+                  ✓
+                </div>
+
+                <div className="mb-4 flex flex-wrap gap-2">
+                  {certification.category && (
+                    <span className="rounded-full bg-white px-3 py-1 text-xs font-bold uppercase tracking-wide text-slate-500">
+                      {certification.category}
+                    </span>
+                  )}
+                  {certification.date && (
+                    <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-600">
+                      {certification.date}
+                    </span>
+                  )}
+                </div>
+
+                <h3 className="text-xl font-bold text-slate-950">
+                  {certification.title}
+                </h3>
+
+                <p className="mt-1 font-semibold text-slate-600">
+                  {certification.issuer}
+                </p>
+
+                <p className="mt-4 text-sm leading-6 text-slate-500">
+                  {certification.description}
+                </p>
+
+                {certification.credentialUrl && (
+                  <a
+                    href={certification.credentialUrl}
+                    className="mt-5 inline-flex text-sm font-semibold text-blue-600"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    View Credential
+                  </a>
+                )}
               </article>
             ))}
           </div>

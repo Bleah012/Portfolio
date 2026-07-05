@@ -118,3 +118,21 @@ export type Experience = {
   tools?: string[];
   order?: number;
 };
+export type CertificationsSection = {
+  eyebrow?: string;
+  heading?: string;
+  description?: string;
+};
+
+export type Certification = {
+  _id: string;
+  title?: string;
+  issuer?: string;
+  date?: string;
+  category?: string;
+  description?: string;
+  credentialUrl?: string;
+  featured?: boolean;
+  order?: number;
+  accentColor?: string;
+};
