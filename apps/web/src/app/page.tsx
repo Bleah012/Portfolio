@@ -67,23 +67,49 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50 text-slate-950">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-        <a href="#" className="flex items-center gap-3 font-bold">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-500 text-sm text-white shadow-lg shadow-blue-500/25">
-            BB
-          </span>
-          <span>{settings?.siteTitle || "Bleah."}</span>
-        </a>
+      <nav className="fixed left-0 top-0 z-50 w-full border-b border-slate-200/70 bg-white/90 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+          <a href="#" className="flex items-center gap-3 font-bold">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-500 text-sm text-white shadow-lg shadow-blue-500/25">
+              BB
+            </span>
+            <span>{settings?.siteTitle || "Bleah."}</span>
+          </a>
 
-        <a
-          href="#contact"
-          className="rounded-xl bg-blue-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-500/25"
-        >
-          Hire Me
-        </a>
+          <div className="hidden items-center gap-6 text-sm font-semibold text-slate-600 lg:flex">
+            <a href="#about" className="hover:text-blue-600">
+              About
+            </a>
+            <a href="#skills" className="hover:text-blue-600">
+              Skills
+            </a>
+            <a href="#projects" className="hover:text-blue-600">
+              Projects
+            </a>
+            <a href="#experience" className="hover:text-blue-600">
+              Experience
+            </a>
+            <a href="#certifications" className="hover:text-blue-600">
+              Certifications
+            </a>
+            <a href="#blog" className="hover:text-blue-600">
+              Blog
+            </a>
+            <a href="#contact" className="hover:text-blue-600">
+              Contact
+            </a>
+          </div>
+
+          <a
+            href="#contact"
+            className="rounded-xl bg-blue-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-500/25"
+          >
+            Hire Me
+          </a>
+        </div>
       </nav>
 
-      <section className="mx-auto grid min-h-[calc(100vh-76px)] max-w-7xl items-center gap-12 px-6 py-16 lg:grid-cols-2">
+      <section className="mx-auto grid min-h-screen max-w-7xl items-center gap-12 px-6 pb-16 pt-32 lg:grid-cols-2">
         <div className="space-y-8">
           {hero?.eyebrow && (
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-600">
@@ -742,6 +768,30 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      <footer className="border-t border-slate-200 bg-white px-6 py-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 text-sm text-slate-500 md:flex-row md:items-center md:justify-between">
+          <p>
+            © {new Date().getFullYear()} {settings?.siteTitle || "Bleah Barasa"}
+            . All rights reserved.
+          </p>
+
+          <div className="flex flex-wrap gap-4">
+            <a href="#about" className="hover:text-blue-600">
+              About
+            </a>
+            <a href="#projects" className="hover:text-blue-600">
+              Projects
+            </a>
+            <a href="#blog" className="hover:text-blue-600">
+              Blog
+            </a>
+            <a href="#contact" className="hover:text-blue-600">
+              Contact
+            </a>
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }
