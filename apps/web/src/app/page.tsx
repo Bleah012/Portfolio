@@ -3,16 +3,24 @@ import {
   ABOUT_QUERY,
   HERO_QUERY,
   SITE_SETTINGS_QUERY,
+  SKILLS_QUERY,
   STATS_QUERY,
 } from "@/sanity/lib/queries";
-import type { About, Hero, SiteSettings, Stats } from "@/sanity/lib/types";
+import type {
+  About,
+  Hero,
+  SiteSettings,
+  Skills,
+  Stats,
+} from "@/sanity/lib/types";
 
 export default async function Home() {
-  const [settings, hero, stats, about] = await Promise.all([
+  const [settings, hero, stats, about, skills] = await Promise.all([
     client.fetch<SiteSettings>(SITE_SETTINGS_QUERY),
     client.fetch<Hero>(HERO_QUERY),
     client.fetch<Stats>(STATS_QUERY),
     client.fetch<About>(ABOUT_QUERY),
+    client.fetch<Skills>(SKILLS_QUERY),
   ]);
 
   return (
@@ -211,6 +219,73 @@ export default async function Home() {
                     {item.description}
                   </p>
                 </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills" className="bg-slate-50 px-6 py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-14 text-center">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-blue-600">
+              {skills?.eyebrow || "Skills"}
+            </p>
+            <h2 className="text-4xl font-bold tracking-tight text-slate-950 md:text-5xl">
+              {skills?.heading || "Skills & Technologies"}
+            </h2>
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-2">
+            {skills?.categories?.map((category) => (
+              <div
+                key={category._key}
+                className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+              >
+                <div className="mb-6">
+                  <h3 className="text-xl font-bold text-slate-950">
+                    {category.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-500">
+                    {category.description}
+                  </p>
+                </div>
+
+                <div className="space-y-5">
+                  {category.skills?.map((skill) => (
+                    <div key={skill._key}>
+                      <div className="mb-2 flex items-center justify-between text-sm">
+                        <span className="font-semibold text-slate-700">
+                          {skill.name}
+                        </span>
+                        <span className="text-slate-400">{skill.level}%</span>
+                      </div>
+                      <div className="h-2 overflow-hidden rounded-full bg-slate-100">
+                        <div
+                          className="h-full rounded-full bg-gradient-to-r from-blue-600 to-sky-400"
+                          style={{ width: `${skill.level ?? 0}%` }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <p className="mb-5 text-xs font-bold uppercase tracking-[0.3em] text-slate-400">
+              Full Stack
+            </p>
+
+            <div className="flex flex-wrap gap-2">
+              {skills?.technologies?.map((technology) => (
+                <span
+                  key={technology._key}
+                  className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-semibold text-slate-700"
+                >
+                  {technology.name}
+                </span>
               ))}
             </div>
           </div>

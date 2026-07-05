@@ -64,3 +64,24 @@ export const ABOUT_QUERY = groq`
     }
   }
 `;
+export const SKILLS_QUERY = groq`
+  *[_id == "skills"][0]{
+    eyebrow,
+    heading,
+    categories[]{
+      _key,
+      title,
+      description,
+      skills[]{
+        _key,
+        name,
+        level
+      }
+    },
+    technologies[]{
+      _key,
+      name,
+      group
+    }
+  }
+`;

@@ -60,3 +60,22 @@ export type About = {
     description?: string;
   }[];
 };
+export type Skills = {
+  eyebrow?: string;
+  heading?: string;
+  categories?: {
+    _key: string;
+    title?: string;
+    description?: string;
+    skills?: {
+      _key: string;
+      name?: string;
+      level?: number;
+    }[];
+  }[];
+  technologies?: {
+    _key: string;
+    name?: string;
+    group?: string;
+  }[];
+};
