@@ -107,10 +107,35 @@ export default async function Home() {
             Hire Me
           </a>
         </div>
+        <div className="border-t border-slate-200/70 px-5 py-2 lg:hidden">
+          <div className="flex gap-4 overflow-x-auto whitespace-nowrap text-sm font-semibold text-slate-600">
+            <a href="#about" className="hover:text-blue-600">
+              About
+            </a>
+            <a href="#skills" className="hover:text-blue-600">
+              Skills
+            </a>
+            <a href="#projects" className="hover:text-blue-600">
+              Projects
+            </a>
+            <a href="#experience" className="hover:text-blue-600">
+              Experience
+            </a>
+            <a href="#certifications" className="hover:text-blue-600">
+              Certifications
+            </a>
+            <a href="#blog" className="hover:text-blue-600">
+              Blog
+            </a>
+            <a href="#contact" className="hover:text-blue-600">
+              Contact
+            </a>
+          </div>
+        </div>
       </nav>
 
-      <section className="mx-auto grid min-h-screen max-w-7xl items-center gap-12 px-6 pb-16 pt-32 lg:grid-cols-2">
-        <div className="space-y-8">
+      <section className="mx-auto grid min-h-screen max-w-7xl items-center gap-10 px-5 pb-16 pt-40 sm:px-6 sm:pt-32 lg:grid-cols-2">
+        <div className="space-y-7">
           {hero?.eyebrow && (
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-600">
               <span className="h-2 w-2 rounded-full bg-emerald-500" />
@@ -123,7 +148,7 @@ export default async function Home() {
               {hero?.greeting || "Hello, I'm"}
             </p>
 
-            <h1 className="text-6xl font-bold tracking-tight md:text-8xl">
+            <h1 className="text-5xl font-bold tracking-tight sm:text-6xl md:text-8xl">
               <span className="block">{hero?.firstName || "Bleah"}</span>
               <span className="block bg-gradient-to-r from-blue-600 to-sky-400 bg-clip-text text-transparent">
                 {hero?.lastName || "Barasa"}
@@ -131,16 +156,16 @@ export default async function Home() {
             </h1>
 
             <div className="space-y-1">
-              <p className="text-2xl font-semibold text-slate-700">
+              <p className="text-xl font-semibold text-slate-700 sm:text-2xl">
                 {hero?.role || settings?.role || "Software Engineer"}
               </p>
-              <p className="text-lg text-slate-400">
+              <p className="text-base text-slate-400 sm:text-lg">
                 {hero?.tagline || settings?.shortBio}
               </p>
             </div>
           </div>
 
-          <p className="min-h-8 text-2xl font-medium text-slate-700">
+          <p className="min-h-8 text-xl font-medium text-slate-700 sm:text-2xl">
             {hero?.typewriterPhrases?.[0] || "Building intelligent solutions."}
           </p>
 
@@ -212,8 +237,8 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="border-y border-slate-200 bg-white/80 px-6 py-10 backdrop-blur">
-        <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-4">
+      <section className="border-y border-slate-200 bg-white/80 px-5 py-10 backdrop-blur sm:px-6">
+        <div className="mx-auto grid max-w-7xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {stats?.items?.map((item) => (
             <div
               key={item._key}
@@ -230,7 +255,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="about" className="bg-white px-6 py-24">
+      <section id="about" className="bg-white px-5 py-20 sm:px-6 sm:py-24">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-blue-600">
@@ -293,7 +318,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="skills" className="bg-slate-50 px-6 py-24">
+      <section id="skills" className="bg-slate-50 px-5 py-20 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="mb-14 text-center">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-blue-600">
@@ -360,7 +385,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="projects" className="bg-white px-6 py-24">
+      <section id="projects" className="bg-white px-5 py-20 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="mb-14 text-center">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-blue-600">
@@ -527,7 +552,10 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="certifications" className="bg-white px-6 py-24">
+      <section
+        id="certifications"
+        className="bg-white px-5 py-20 sm:px-6 sm:py-24"
+      >
         <div className="mx-auto max-w-7xl">
           <div className="mb-14 text-center">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-blue-600">
@@ -599,7 +627,10 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="blog" className="mx-auto w-full max-w-6xl px-6 py-20">
+      <section
+        id="blog"
+        className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-6"
+      >
         <div className="mb-10 max-w-3xl">
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-blue-600">
             {blogSection?.eyebrow ?? "Blog"}
@@ -667,7 +698,10 @@ export default async function Home() {
           ))}
         </div>
       </section>
-      <section id="contact" className="bg-slate-950 px-6 py-24 text-white">
+      <section
+        id="contact"
+        className="bg-slate-950 px-5 py-20 text-white sm:px-6 sm:py-24"
+      >
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_0.8fr]">
           <div>
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-blue-300">
